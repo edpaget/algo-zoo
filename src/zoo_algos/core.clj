@@ -1,42 +1,44 @@
-(ns zoo-algos.core)
+(ns zoo-algos.core
+  (:require [incanter.core :refer [log]]
+            [zoo-algos.graph :refer :all]))
 
-(defn update-p
-  [graph [type id] f]
-  (update-in [graph type id] (fn [{:keys [p delta]
-                                   {:p (f [p delta])
-                                    :delta delta}}])))
+(defn correct-p
+  [user-answer {:keys [task-answer task-p]}]
+  (if (= task-answer user-answer)
+    (log task-p)
+    (- (log task-p) 1)))
 
-(defn correct-prob
-  [[task-answer user-answer task-p]]
-  )
-
-(defn log-likelihood
-  [[task-p task-answer user-answer]]
-  )
+(defn answer-p
+  [{:keys [user-p user-answer]}]
+  (* user-p user-answer))
 
 (defn sigma-task-p
-  [answers [task users]]
-  (reduce + (map (comp log-likelihood (partial answer :task task)) users)))
+  [task task-delta]
+  (reduce + (map answer-p task-delta)))
 
 (defn sigma-user-p 
-  [answers [user tasks]]
-  (reduce + (map (comp correct-prob (partial answer :user user)) tasks)))
+  [user user-delta]
+  (reduce + (map (partial correct-p (:p user)) user-delta)))
 
 (defn update-task-p
-  [answers graph task-id] 
-  (update-p graph [:task task-id] (partial sigma-task-p answers)))
+  [graph task-id] 
+  (update-p graph [:task task-id] sigma-task-p))
 
 (defn update-user-p
-  [answers graph user-id]
-  (update-p graph [:user user-id] (partial sigma-user-p answers)))
+  [graph user-id]
+  (update-p graph [:user user-id] sigma-user-p))
 
 (defn tasks-p
   [graph answers]
-  (reduce graph update-task-p (tasks answers)))
+  (reduce graph update-task-p (task-ids graph)))
 
 (defn users-p
   [graph answers]
-  (reduce graph update-task-p (tasks answers)))
+  (reduce graph update-task-p (user-ids graph)))
+
+(defn reduce-answers
+  [graph]
+  (map (tasks graph)))
 
 (defn iterative-reduction
   [assignment-graph answers iterations]
