@@ -91,9 +91,10 @@
     this))
 
 (defn -main
-  [& [project annotation m-host m-port]]
+  [& [project iterations annotation m-host m-port]]
   (if m-host
     (connect! {:host m-host :port m-port})
     (connect!))
   (set-db! (get-db project))
-  (println (iterative-reduction (MongoGraph. project (edn/read-string annotation)) 2)))
+  (println (iterative-reduction (MongoGraph. project (edn/read-string annotation)) (Integer/parseInt iterations))))
+
