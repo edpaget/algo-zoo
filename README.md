@@ -9,13 +9,13 @@ Make sure you've downloaded and restored your project's Mongo Database dump.
 ### Annotation Match
 Right now the algorithim is only measuring if a particular annotation is present or not on a classification. Specify which annotation you want to match by passing it in like so 
 
-        {:<annotation key> <annotation value>}
+        "{:<annotation key> \"<annotation value>\"}"
 
 For example in Disk Detective I want to match on an annotation of classified_as "good", so I'll pass as the third argument. 
 
-        {:classified_as \"good\"}
+        "{:classified_as \"good\"}"
 
-Let me know if you have trouble with that. 
+The quote marks are important, so your shell treats that as one argument. Let me know if you have trouble with that. 
 
 ### OS X
 
