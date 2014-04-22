@@ -8,11 +8,11 @@
 
 (defn sigma-task-p
   [task task-delta]
-  (reduce + (map answer-p task-delta)))
+  (reduce + (pmap answer-p task-delta)))
 
 (defn sigma-user-p 
   [user user-delta]
-  (reduce + (map answer-p user-delta)))
+  (reduce + (pmap answer-p user-delta)))
 
 (defn update-task-p
   [graph task-id] 
@@ -32,12 +32,12 @@
 
 (defn reduce-answers
   [graph]
-  (map (fn [id]
-         (let [{:keys [id p]} (user graph id)] 
-           (if (> 0 p) 
-             {:id id :answer 1} 
-             {:id id :answer -1})))
-       (task-ids (tasks-p graph))))
+  (pmap (fn [id]
+          (let [{:keys [id p]} (task graph id)] 
+            (if (> 0 p) 
+              {:id id :answer 1} 
+              {:id id :answer -1})))
+        (task-ids (tasks-p graph))))
 
 (defn init-user-p
   [graph]
