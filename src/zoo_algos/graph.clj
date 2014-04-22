@@ -1,20 +1,5 @@
-(ns zoo-algos.graph)
-
-(defn task-ids
-  [graph]
-  (graph :task :all))
-
-(defn user-ids
-  [graph]
-  (graph :user :all))
-
-(defn task
-  [graph id]
-  (graph :task id))
-
-(defn user
-  [graph id]
-  (graph :user id))
+(ns zoo-algos.graph
+  (:refer-clojure :exclude [get]))
 
 (defprotocol TaskGraph
   (get [this type id])
@@ -32,3 +17,20 @@
     (update-in this [type id] (fn [{:keys [p delta]}]
                                 {:p (f p delta)
                                  :delta delta}))))
+
+(defn task-ids
+  [graph]
+  (get graph :task :all))
+
+(defn user-ids
+  [graph]
+  (get graph :user :all))
+
+(defn task
+  [graph id]
+  (get graph :task id))
+
+(defn user
+  [graph id]
+  (get graph :user id))
+ 

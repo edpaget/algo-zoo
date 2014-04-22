@@ -1,16 +1,10 @@
 (ns zoo-algos.core
-  (:require [incanter.core :refer [log]]
-            [zoo-algos.graph :refer :all]))
-
-(defn correct-p
-  [user-answer {:keys [task-answer task-p]}]
-  (if (= task-answer user-answer)
-    (log task-p)
-    (- (log task-p) 1)))
+  (:refer-clojure :exclude [get])
+  (:require [zoo-algos.graph :refer :all]))
 
 (defn answer-p
-  [{:keys [user-p user-answer]}]
-  (* user-p user-answer))
+  [{:keys [p answer]}]
+  (* p answer))
 
 (defn sigma-task-p
   [task task-delta]
@@ -18,7 +12,7 @@
 
 (defn sigma-user-p 
   [user user-delta]
-  (reduce + (map (partial correct-p (:p user)) user-delta)))
+  (reduce + (map answer-p user-delta)))
 
 (defn update-task-p
   [graph task-id] 
@@ -29,23 +23,33 @@
   (update-p graph [:user user-id] sigma-user-p))
 
 (defn tasks-p
-  [graph answers]
-  (reduce graph update-task-p (task-ids graph)))
+  [graph]
+  (reduce update-task-p graph (task-ids graph)))
 
 (defn users-p
-  [graph answers]
-  (reduce graph update-task-p (user-ids graph)))
+  [graph]
+  (reduce update-task-p graph (user-ids graph)))
 
 (defn reduce-answers
   [graph]
-  (map (tasks graph)))
+  (map (fn [id]
+         (let [{:keys [id p]} (user graph id)] 
+           (if (> 0 p) 
+             {:id id :answer 1} 
+             {:id id :answer -1})))
+       (task-ids (tasks-p graph))))
+
+(defn init-user-p
+  [graph]
+  (reduce #(update-p %1 [:user %2] (fn [& args] (rand))) graph (user-ids graph)))
 
 (defn iterative-reduction
-  [assignment-graph answers iterations]
+  [assignment-graph iterations]
   (loop [i 0
          g (init-user-p assignment-graph)]
+    (println "Iteration: " (+ 1 i) " of " iterations)
     (if (= i iterations)
       (reduce-answers g)
-      (recur (+ i 1) (-> (tasks-p g answers)
-                         (users-p answers))))))
+      (recur (+ i 1) (-> (tasks-p g)
+                         users-p)))))
 
