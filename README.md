@@ -22,7 +22,7 @@ Let me know if you have trouble with that.
 * Install [homebrew](http://brew.sh)
 * In a terminal `brew install leiningen`
 * Clone the project `git clone https://github.com/edpaget/algo-zoo`
-* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match> (Note: If you don't have Java installed you'll be prompted to at this step)
+* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match>` (Note: If you don't have Java installed you'll be prompted to at this step)
 * Sit back and wait (A really long time)
 
 ### Ubuntu
@@ -30,7 +30,7 @@ Let me know if you have trouble with that.
 * `sudo apt-get install openjdk-7-jdk`
 * Install [Leiningen](https://github.com/technomancy/leiningen#Installation)
 * Clone the project `git clone https://github.com/edpaget/algo-zoo`
-* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match> 
+* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match>`
 * Sit back and wait (A really long time)
 
 ## License
