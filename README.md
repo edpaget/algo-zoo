@@ -1,13 +1,13 @@
 # Crowdsourced Reduction!
 
-Based on [Budget-Optimal Task Allocation for Reliable Crowdsourcing Systems](http://arxiv.org/abs/1110.3564) by Karger et al.
+Based on [Budget-Optimal Task Allocation for Reliable Crowdsourcing Systems](http://arxiv.org/abs/1110.3564) by Karger et al. (2011).
 
 ## Usage
 
 Make sure you've downloaded and restored your project's Mongo Database dump.
 
 ### Annotation Match
-Right now the algorithim is only measuring if a particular annotation is present or not on a classification. Specify which annotation you want to match by passing it in like so 
+Right now the algorithm is only measuring if a particular annotation is present or not on a classification. Specify which annotation you want to match by passing it in like so 
 
         "{:<annotation key> \"<annotation value>\"}"
 
@@ -22,16 +22,16 @@ The quote marks are important, so your shell treats that as one argument. Let me
 * Install [homebrew](http://brew.sh)
 * In a terminal `brew install leiningen`
 * Clone the project `git clone https://github.com/edpaget/algo-zoo`
-* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match>` (Note: If you don't have Java installed you'll be prompted to at this step)
-* Sit back and wait (A really long time)
+* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match>` (Note: If you don't have Java installed you'll be prompted to at this step). Example: `lein run -m zoo-algos.mongo wise 2 "{:classified_as \"good\"}"`
+* Sit back and wait (a really long time)
 
 ### Ubuntu
 
 * `sudo apt-get install openjdk-7-jdk`
 * Install [Leiningen](https://github.com/technomancy/leiningen#Installation)
 * Clone the project `git clone https://github.com/edpaget/algo-zoo`
-* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match>`
-* Sit back and wait (A really long time)
+* `cd` into the directory and run `lein run -m zoo-algos.mongo <database name> <iterations> <annotation match>` Example: `lein run -m zoo-algos.mongo wise 2 "{:classified_as \"good\"}"`
+* Sit back and wait (a really long time)
 
 ## License
 
